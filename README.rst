@@ -7,11 +7,11 @@ The string `１つの価格が二兆30万五千十7円になります。` will b
 And also, `打率は三割二部五厘です。`  will be a float `0.325`.
 The return value is a list of result objects.
 If the input string has no number notation, suji returns a empty list.
-The result object has three keys: `val`, `at`, and `len`:
+The result object has three keys: `val`, `beg`, and `end`:
 
 :val: the numerical value of the number notation.
-:at:  the start postion of the found number notation at the input string.
-:len: the length of the found number notation.
+:beg: the start postion of the found number notation at the input string.
+:end: the end postion of the found number notation.
 
 suji is a one-pass parser.
 That is, suji parse a source text from the head to the end only once.
