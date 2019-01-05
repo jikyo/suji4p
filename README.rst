@@ -20,13 +20,9 @@ This library is pure Python code with no dependencies.
 Installation
 -----
 
-(in preparation)
-
 .. code-block:: BashLexer
 
-    $ git clone https://github.com/jikyo/suji4p.git
-    $ cd suji4p
-    $ pip install .
+    $ pip install suji
 
 
 Usage

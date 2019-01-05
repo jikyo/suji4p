@@ -21,13 +21,9 @@ suji は one-pass パーサーです。
 Installation
 -----
 
-(in preparation)
-
 .. code-block:: BashLexer
 
-    $ git clone https://github.com/jikyo/suji4p.git
-    $ cd suji4p
-    $ pip install .
+    $ pip install suji
 
 
 Usage
