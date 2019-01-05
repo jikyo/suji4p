@@ -20,6 +20,8 @@ This library is pure Python code with no dependencies.
 Installation
 -----
 
+(in preparation)
+
 .. code-block:: BashLexer
 
     $ git clone https://github.com/jikyo/suji4p.git
@@ -33,20 +35,10 @@ Usage
 .. code-block:: python
 
     >>> import suji
-    >>> suji.converter.values('１つの価格が二兆30万五千十7円になります。')
+    >>> suji.values('１つの価格が二兆30万五千十7円になります。')
     [{'val': 1, 'beg': 0, 'end': 1}, {'val': 2000000305017, 'beg': 6, 'end': 15}]
-    >>> suji.converter.values('打率は三割二分五厘です。')
+    >>> suji.values('打率は三割二分五厘です。')
     [{'val': 0.32500000000000007, 'beg': 3, 'end': 9}]
-    >>> suji.converter.values('こんにちは')
+    >>> suji.values('こんにちは')
     []
 
-
-.. code-block:: python
-
-    >>> from suji import converter
-    >>> converter.values('１つの価格が二兆30万五千十7円になります。')
-    [{'val': 1, 'beg': 0, 'end': 1}, {'val': 2000000305017, 'beg': 6, 'end': 15}]
-    >>> converter.values('打率は三割二分五厘です。')
-    [{'val': 0.32500000000000007, 'beg': 3, 'end': 9}]
-    >>> converter.values('こんにちは')
-    []

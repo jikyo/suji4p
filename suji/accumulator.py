@@ -1,7 +1,8 @@
-#:coding=utf-8:
+""" An accumulator for japanese number notation.
+"""
 
 
-class Acc():
+class Acc:
 
     def __init__(self):
         self.inside = False
@@ -67,6 +68,3 @@ class Acc():
             'beg': self.__beg,
             'end': self.__end,
         }
-
-
-__all__ = [];
