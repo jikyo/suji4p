@@ -49,8 +49,6 @@ suji は one-pass パーサーです。
 Installation:
 -------------
 
-.. code-block:: BashLexer
-
     $ pip install suji
 
 

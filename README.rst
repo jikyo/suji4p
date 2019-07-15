@@ -47,8 +47,6 @@ This library is pure Python code with no dependencies.
 Installation:
 -------------
 
-.. code-block:: BashLexer
-
     $ pip install suji
 
 
