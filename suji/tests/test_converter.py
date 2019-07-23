@@ -20,9 +20,11 @@ class TestConverter(unittest.TestCase):
             self.assertAlmostEqual(actual[i]['beg'], expected[i]['beg'], msg=m)
             self.assertAlmostEqual(actual[i]['end'], expected[i]['end'], msg=m)
 
-    def test_values_int(self):
+    def test_empty(self):
+        self.assertEqual(values(''), [])
         self.assertEqual(values('こんにちは'), [])
 
+    def test_values_int(self):
         expect = [
             {'val': 5, 'beg': 0, 'end': 1}
         ]
@@ -142,6 +144,51 @@ class TestConverter(unittest.TestCase):
         self.assertEqual(values('千七円'), expect)
 
         expect = [
+            {'val': 1000, 'beg': 0, 'end': 2},
+        ]
+        self.assertEqual(values('一千'), expect)
+
+        expect = [
+            {'val': 10000000, 'beg': 0, 'end': 3},
+        ]
+        self.assertEqual(values('一千万円'), expect)
+
+        expect = [
+            {'val': 11110000, 'beg': 0, 'end': 8},
+        ]
+        self.assertEqual(values('一千一百一十一万円'), expect)
+
+        expect = [
+            {'val': 11110000, 'beg': 3, 'end': 11},
+        ]
+        self.assertEqual(values('価格は一千一百一十一万'), expect)
+
+        expect = [
+            {'val': 11110000, 'beg': 3, 'end': 11},
+        ]
+        self.assertEqual(values('価格は一千一百一十一万円です。'), expect)
+
+        expect = [
+            {'val': 11100000, 'beg': 0, 'end': 4},
+        ]
+        self.assertEqual(values('千百十万円'), expect)
+
+        expect = [
+            {'val': 12130000, 'beg': 0, 'end': 6},
+        ]
+        self.assertEqual(values('千二百十三万円'), expect)
+
+        expect = [
+            {'val': 91180000, 'beg': 0, 'end': 6},
+        ]
+        self.assertEqual(values('九千百十八万円'), expect)
+
+        expect = [
+            {'val': 11101111, 'beg': 0, 'end': 8},
+        ]
+        self.assertEqual(values('千百十万千百十一円'), expect)
+
+        expect = [
             {'val': 120052, 'beg': 3, 'end': 9},
         ]
         self.assertEqual(values('価格は十二万五十二円になります。'),  expect)
@@ -162,6 +209,6 @@ class TestConverter(unittest.TestCase):
         self.assertEqual(values('6億400万2千5になります。'), expect)
 
         expect = [
-            {'val': 11010, 'beg': 0, 'end': 3},
+            {'val': 11110, 'beg': 0, 'end': 4},
         ]
-        self.assertEqual(values('万千十'),  expect)
+        self.assertEqual(values('万千百十'),  expect)

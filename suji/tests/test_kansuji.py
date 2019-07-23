@@ -9,7 +9,11 @@ class TestKansuji(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_kannsuuji_string(self):
+    def test_empty(self):
+        self.assertEqual(kansujis(''), [])
+        self.assertEqual(kansujis('こんにちは'), [])
+
+    def test_kansuji_string(self):
         self.assertEqual(Kansuji.string(30), '三十')
         self.assertEqual(Kansuji.string(56), '五十六')
         self.assertEqual(Kansuji.string(100, False), '百')
@@ -26,16 +30,17 @@ class TestKansuji(unittest.TestCase):
         self.assertEqual(Kansuji.string(2000000607), '二十億六百七')
         self.assertEqual(Kansuji.string(32.001), '三十二')
 
-    def test_kannsuuji_minus(self):
+    def test_kansuji_minus(self):
         self.assertEqual(Kansuji.string(-20010300), 'マイナス二千一万三百')
         self.assertEqual(Kansuji.string(-0), '零')
         self.assertEqual(Kansuji.string(-1), 'マイナス一')
         self.assertEqual(Kansuji.string(-100000000, True), 'マイナス一億')
 
-    def test_kansuji(self):
-        expect = []
-        self.assertListEqual(kansujis('文字'), expect)
+    def test_values_decimal(self):
+        self.assertEqual(Kansuji.string(-1.1), 'マイナス一')
+        self.assertEqual(Kansuji.string(-100.234, False), 'マイナス百')
 
+    def test_kansujis(self):
         expect = [
             {'val': '零', 'beg': 0, 'end': 1},
         ]
@@ -82,6 +87,13 @@ class TestKansuji(unittest.TestCase):
         self.assertListEqual(kansujis('1,000万', False), expect)
 
         expect = [
-            {'val': '二兆三十万五千十七', 'beg': 0, 'end': 9},
+            {'val': '一', 'beg': 0, 'end': 1},
+            {'val': '二兆三十万五千十七', 'beg': 6, 'end': 15},
         ]
-        self.assertListEqual(kansujis('二兆30万五千十7円になります。', False), expect)
+        self.assertEqual(kansujis('１つの価格が二兆30万五千十7円になります。', False), expect)
+
+        expect = [
+            {'val': '一', 'beg': 0, 'end': 1},
+            {'val': '二兆三十万五千一十七', 'beg': 6, 'end': 15},
+        ]
+        self.assertEqual(kansujis('１つの価格が二兆30万五千十7円になります。'), expect)

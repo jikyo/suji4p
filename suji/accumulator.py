@@ -44,12 +44,17 @@ class Acc:
     def attach_cardinal(self, index, cardinal):
         self.inside = True
         self.index_increment(index)
-        if self.__val is 0:
-                self.__val = 1
+
+        val = 1 if self.__val is 0 else self.__val
+
         if self.__last_cardinal < cardinal:
-            self.__val_cardinal = (self.__val_cardinal + self.__val) * cardinal
+            if self.__val is 0 and self.__val_cardinal is not 0:
+                self.__val_cardinal = self.__val_cardinal * cardinal
+            else:
+                self.__val_cardinal = (self.__val_cardinal + val) * cardinal
         else:
-            self.__val_cardinal = self.__val_cardinal + (self.__val * cardinal)
+            self.__val_cardinal = self.__val_cardinal + (val * cardinal)
+
         self.__last_cardinal = cardinal
         self.__val = 0
 
