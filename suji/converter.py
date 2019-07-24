@@ -1,6 +1,7 @@
-""" The entry point to the converter method.
+""" The entry point to the converter methods.
 
-This provides a method to convert from japanese number notation to numerical value.
+This provides a method to convert from japanese number notation to numerical value,
+and a method to convert from a string with Japanese number notations to the numerical string.
 """
 from suji.accumulator import Acc
 from suji.char import Char
@@ -56,4 +57,26 @@ def values(src):
     return val
 
 
-__all__ = ['values']
+def value(src):
+    """ Convert from a string with Japanese number notations to the numerical string.
+    The return value is a converted str.
+    If the input string has no number notation, `value` returns the input string.
+
+    :param src: a input string.
+    :return: a converted str.
+    """
+    vals = values(src)
+    if 0 == len(vals):
+        return src
+
+    start = 0
+    s = ''
+    for v in vals:
+        s += src[start:v['beg']]
+        s += str(v['val'])
+        start = v['end']
+    s += src[start:len(src)]
+    return s
+
+
+__all__ = ['values', 'value']

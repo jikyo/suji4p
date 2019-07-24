@@ -1,7 +1,7 @@
 import inspect
 import unittest
 
-from suji.converter import values
+from suji.converter import values, value
 
 
 class TestConverter(unittest.TestCase):
@@ -21,6 +21,8 @@ class TestConverter(unittest.TestCase):
             self.assertAlmostEqual(actual[i]['end'], expected[i]['end'], msg=m)
 
     def test_empty(self):
+        self.assertEqual(value(''), '')
+        self.assertEqual(value('こんにちは'), 'こんにちは')
         self.assertEqual(values(''), [])
         self.assertEqual(values('こんにちは'), [])
 
@@ -126,13 +128,7 @@ class TestConverter(unittest.TestCase):
         ]
         self.assertFloatArray(values('多分.00123です。'), expect)
 
-    def test_values_kannsuuji(self):
-        expect = [
-            {'val': 1, 'beg': 0, 'end': 1},
-            {'val': 2000000305017, 'beg': 6, 'end': 15},
-        ]
-        self.assertEqual(values('１つの価格が二兆30万五千十7円になります。'), expect)
-
+    def test_values_kansuji(self):
         expect = [
             {'val': 250, 'beg': 0, 'end': 4},
         ]
@@ -212,3 +208,29 @@ class TestConverter(unittest.TestCase):
             {'val': 11110, 'beg': 0, 'end': 4},
         ]
         self.assertEqual(values('万千百十'),  expect)
+
+        expect = [
+            {'val': 1, 'beg': 0, 'end': 1},
+            {'val': 2000000305017, 'beg': 6, 'end': 15},
+        ]
+        self.assertEqual(values('１つの価格が二兆30万五千十7円になります。'), expect)
+
+    def test_value(self):
+        self.assertEqual(value('二百五十円'), '250円')
+        self.assertEqual(value('千七円'), '1007円')
+        self.assertEqual(value('一千'), '1000')
+        self.assertEqual(value('一千万円'), '10000000円')
+        self.assertEqual(value('一千一百一十一万円'), '11110000円')
+        self.assertEqual(value('3億'), '300000000')
+        self.assertEqual(value('価格は一千一百一十一万'), '価格は11110000')
+        self.assertEqual(value('価格は一千一百一十一万円です。'), '価格は11110000円です。')
+        self.assertEqual(value('千百十万円'), '11100000円')
+        self.assertEqual(value('千二百十三万円'), '12130000円')
+        self.assertEqual(value('九千百十八万円'), '91180000円')
+        self.assertEqual(value('千百十万千百十一円'), '11101111円')
+        self.assertEqual(value('価格は十二万五十二円になります。'),  '価格は120052円になります。')
+        self.assertEqual(value('価格は十二兆五十二'), '価格は12000000000052')
+        self.assertEqual(value('千一兆五十二円になります。'), '1001000000000052円になります。')
+        self.assertEqual(value('6億400万2千5になります。'), '604002005になります。')
+        self.assertEqual(value('万千百十'), '11110')
+        self.assertEqual(value('１つの価格が二兆30万五千十7円になります。'), '1つの価格が2000000305017円になります。')

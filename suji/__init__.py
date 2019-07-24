@@ -1,2 +1,2 @@
-from suji.converter import values
-from suji.kansuji import kansujis
+from suji.converter import values, value
+from suji.kansuji import kansujis, kansuji
