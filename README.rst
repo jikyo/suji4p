@@ -6,7 +6,7 @@ suji is a converter library from Japanese number notation to numerical value, an
 
 
 To convert from Japanese number notation to numerical string or value:
-------------------------------------------------------------
+----------------------------------------------------------------------
 
 Japanese number notation can include Kansuji.
 The string `１つの価格が二兆30万五千十7円になります。` will be converted to two integers, `1` and `2000000005017`.
