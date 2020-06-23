@@ -11,17 +11,19 @@ class Acc:
         self.__val = 0
         self.__val_cardinal = 0
         self.__last_cardinal = 10
+        self.__oku = 0
         self.__base = 10
 
     def dump(self):
-        s = 'Acc:\n'
-        s += '\tinside: '		+ str(self.inside)		+ '\n'
-        s += '\t__beg: '		+ str(self.__beg)		+ '\n'
-        s += '\t__end: '		+ str(self.__end)		+ '\n'
-        s += '\t__val: '		+ str(self.__val)		+ '\n'
-        s += '\t__val_cardinal: '	+ str(self.__val_cardinal)	+ '\n'
-        s += '\t__last_cardinal: '	+ str(self.__last_cardinal)	+ '\n'
-        s += '\t__base: '		+ str(self.__base)		+ '\n'
+        s = 'Acc:'
+        s += '\tinside: '          + str(self.inside)
+        s += '\t__beg: '           + str(self.__beg)
+        s += '\t__end: '           + str(self.__end)
+        s += '\t__val: '           + str(self.__val)
+        s += '\t__val_cardinal: '  + str(self.__val_cardinal)
+        s += '\t__last_cardinal: ' + str(self.__last_cardinal)
+        s += '\t__oku: '           + str(self.__oku)
+        s += '\t__base: '          + str(self.__base)
         print(s)
 
     def index_increment(self, index):
@@ -45,15 +47,19 @@ class Acc:
         self.inside = True
         self.index_increment(index)
 
-        val = 1 if self.__val is 0 else self.__val
+        val = 1 if self.__val == 0 else self.__val
 
         if self.__last_cardinal < cardinal:
-            if self.__val is 0 and self.__val_cardinal is not 0:
+            if self.__val == 0 and self.__val_cardinal != 0:
                 self.__val_cardinal = self.__val_cardinal * cardinal
             else:
                 self.__val_cardinal = (self.__val_cardinal + val) * cardinal
         else:
             self.__val_cardinal = self.__val_cardinal + (val * cardinal)
+
+        if 100000000 <= self.__val_cardinal:
+            self.__oku += self.__val_cardinal
+            self.__val_cardinal = 0
 
         self.__last_cardinal = cardinal
         self.__val = 0
@@ -69,7 +75,7 @@ class Acc:
 
     def get_value(self):
         return {
-            'val': self.__val_cardinal + self.__val,
+            'val': self.__oku + self.__val_cardinal + self.__val,
             'beg': self.__beg,
             'end': self.__end,
         }
