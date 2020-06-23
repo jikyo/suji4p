@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='suji',
-    version='0.0.6',
+    version='0.1.0',
     description='Japanese number notation converter',
     long_description=open('README.rst', 'r', encoding='utf-8').read(),
     author='Junnosuke Moriya',
